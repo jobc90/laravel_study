@@ -85,6 +85,12 @@ Route::post('/articles', function (Request $request) {
     // $article->user_id = Auth::id();
     // $article->save();
 
+    // // 엘로퀀트 ORM을 사용한는 방법
+    // Article::create([
+    //     'body' => $input['body'],
+    //     'user_id' => Auth::id()
+    // ]);
+
     // 엘로퀀트 ORM을 사용한는 방법
     Article::create([
         'body' => $input['body'],
@@ -92,4 +98,10 @@ Route::post('/articles', function (Request $request) {
     ]);
 
     return 'hello';
+});
+
+Route::get('articles', function () {
+    $articles = Article::all();
+    return view('articles.index', ['articles' => $articles]);
+    // return view('articles.index')->with('articles', $articles);
 });
