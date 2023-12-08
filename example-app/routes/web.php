@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Article;
 use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
@@ -107,17 +108,22 @@ Route::get('articles', function (Request $request) {
     // $skip = ($page -1) * $perPage;
     
     $articles = Article::select('body', 'created_at')
-    // ->skip($skip)
-    // ->take($perPage)
-    ->latest()
-    ->paginate($perPage);
-    // ->orderby('created_at', 'desc')
-    // ->oldest()
-    // ->orderby('body', 'asc')
-    // ->get();
-    // $articles->withQueryString();
-    // $articles->appends(['filter' => 'name']);
-    // $totalCount = Article::count();
+        // ->skip($skip)
+        // ->take($perPage)
+        ->latest()
+        ->paginate($perPage);
+        // ->orderby('created_at', 'desc')
+        // ->oldest()
+        // ->orderby('body', 'asc')
+        // ->get();
+        // $articles->withQueryString();
+        // $articles->appends(['filter' => 'name']);
+        // $totalCount = Article::count();
+        // $now = Carbon::now();
+        // $past = clone $now;
+        // $past->subHours(3);
+
+        // dd($now->diffInMinutes($past));
     return view(
         'articles.index', 
         [
