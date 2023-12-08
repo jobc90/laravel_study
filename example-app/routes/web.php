@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Models\Article;
+use Illuminate\Http\Client\Request as ClientRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -100,8 +101,31 @@ Route::post('/articles', function (Request $request) {
     return 'hello';
 });
 
-Route::get('articles', function () {
-    $articles = Article::all();
-    return view('articles.index', ['articles' => $articles]);
+Route::get('articles', function (Request $request) {
+    // $page = $request->input('page', 1);
+    $perPage = $request->input('per_page', 3);
+    // $skip = ($page -1) * $perPage;
+    
+    $articles = Article::select('body', 'created_at')
+    // ->skip($skip)
+    // ->take($perPage)
+    ->latest()
+    ->paginate($perPage);
+    // ->orderby('created_at', 'desc')
+    // ->oldest()
+    // ->orderby('body', 'asc')
+    // ->get();
+    // $articles->withQueryString();
+    // $articles->appends(['filter' => 'name']);
+    // $totalCount = Article::count();
+    return view(
+        'articles.index', 
+        [
+            'articles' => $articles,
+            // 'totalCount' => $totalCount,
+            // 'page' => $page,
+            // 'perPage'=>$perPage
+        ]
+    );
     // return view('articles.index')->with('articles', $articles);
 });
