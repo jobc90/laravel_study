@@ -35,16 +35,14 @@
             @endfor
         </ul> --}}
 
-        <div class="container p-5">
+        {{-- <div class="container p-5">
             <h1 class="text-2xl mb-5">글목록</h1>
             @foreach($results as $result)
                 <div class="background-white border rounded mb-3 p-3">
                     <p>{{ $result->body }}</p>
                     {{ dd($result) }}
-                    {{-- <p>{{ $article->created_at->format('Y년 m월 d일 H시') }}</p> --}}
-                    {{-- <p>{{ $results->created_at->diffForHumans() }}</p> --}}
                 </div>
             @endforeach
-        </div>
+        </div> --}}
     </body>
 </html>

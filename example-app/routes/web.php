@@ -107,7 +107,8 @@ Route::get('articles', function (Request $request) {
     $perPage = $request->input('per_page', 3);
     // $skip = ($page -1) * $perPage;
     
-    $articles = Article::select('body', 'user_id', 'created_at')
+    $articles = Article::with('user')
+        ->select('body', 'user_id', 'created_at')
         // ->skip($skip)
         // ->take($perPage)
         ->latest()
