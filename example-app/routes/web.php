@@ -107,7 +107,7 @@ Route::get('articles', function (Request $request) {
     $perPage = $request->input('per_page', 3);
     // $skip = ($page -1) * $perPage;
     
-    $articles = Article::select('body', 'created_at')
+    $articles = Article::select('body', 'user_id', 'created_at')
         // ->skip($skip)
         // ->take($perPage)
         ->latest()
@@ -122,12 +122,17 @@ Route::get('articles', function (Request $request) {
         // $now = Carbon::now();
         // $past = clone $now;
         // $past->subHours(3);
-
         // dd($now->diffInMinutes($past));
+    // $results = DB::table('articles as a')
+    //     ->join('users as u', 'a.user_id', '=', 'u.id')
+    //     ->select(['a.*', 'u.name'])
+    //     ->latest()
+    //     ->paginate($perPage);
     return view(
         'articles.index', 
         [
             'articles' => $articles,
+            // 'results' => $results
             // 'totalCount' => $totalCount,
             // 'page' => $page,
             // 'perPage'=>$perPage
