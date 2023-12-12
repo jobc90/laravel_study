@@ -157,7 +157,7 @@ Route::get('articles/{article}/edit', function(Article $article) {
     return view('articles.edit', ['article' => $article]);
 })->name('articles.edit');
 
-Route::put('articles/{article}/update', function(Article $article, Request $request) {
+Route::patch('articles/{article}', function(Article $article, Request $request) {
     $input = $request->validate([
         'body' => [
             'required',
@@ -171,3 +171,9 @@ Route::put('articles/{article}/update', function(Article $article, Request $requ
 
     return redirect()->route('articles.index');
 })->name('articles.update');
+
+Route::delete('articles/{article}', function(Article $article) {
+    $article->delete();
+
+    return redirect()->route('articles.index');
+})->name('articles.delete');
