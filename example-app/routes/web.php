@@ -108,7 +108,7 @@ Route::get('articles', function (Request $request) {
     // $skip = ($page -1) * $perPage;
     
     $articles = Article::with('user')
-        ->select('body', 'user_id', 'created_at')
+        ->select('id', 'body', 'user_id', 'created_at')
         // ->skip($skip)
         // ->take($perPage)
         ->latest()
@@ -140,4 +140,15 @@ Route::get('articles', function (Request $request) {
         ]
     );
     // return view('articles.index')->with('articles', $articles);
+});
+
+// Route::get('articles/{id}', function($id) {
+//     $article = Article::find($id);
+    
+//     return view('articles.show', ['article' => $article]);
+// });
+// 위를 라우트 모델 바인딩을 적용하면
+Route::get('articles/{article}', function(Article $article) {
+    
+    return view('articles.show', ['article' => $article]);
 });

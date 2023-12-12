@@ -9,8 +9,8 @@
                 <div class="background-white border rounded mb-3 p-3">
                     <p>{{ $article->body }}</p>
                     {{-- <p>{{ $article->created_at->format('Y년 m월 d일 H시') }}</p> --}}
-                    <p>{{ $article->created_at->diffForHumans() }}</p>
                     <p>{{ $article->user->name }}</p>
+                    <p><a href="/articles/{{$article->id}}">{{ $article->created_at->diffForHumans() }}</a></p>
                 </div>
             @endforeach
 
