@@ -11,6 +11,13 @@
                     {{-- <p>{{ $article->created_at->format('Y년 m월 d일 H시') }}</p> --}}
                     <p>{{ $article->user->name }}</p>
                     <p><a href="{{ route('articles.show', ['article'=>$article->id]) }}">{{ $article->created_at->diffForHumans() }}</a></p>
+                    <p class=mt-2>
+                        <a 
+                        href="{{ route('articles.edit', ['article'=>$article->id]) }}"
+                        class="button rounded bg-blue-300 px-2 py-1 text-xs text-white"
+                        >
+                        수정</a>
+                    </p>
                 </div>
             @endforeach
 
