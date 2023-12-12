@@ -38,7 +38,7 @@ require __DIR__.'/auth.php';
 
 Route::get('/articles/create', function () {
     return view('articles/create');
-});
+})->name('articles.create');
 
 Route::post('/articles', function (Request $request) {
     // 비어있지않고, 문자열이고, 255자를 넘으면 안된다.
@@ -100,7 +100,7 @@ Route::post('/articles', function (Request $request) {
     ]);
 
     return 'hello';
-});
+})->name('articles.store');
 
 Route::get('articles', function (Request $request) {
     // $page = $request->input('page', 1);
@@ -140,7 +140,7 @@ Route::get('articles', function (Request $request) {
         ]
     );
     // return view('articles.index')->with('articles', $articles);
-});
+})->name('articles.index');
 
 // Route::get('articles/{id}', function($id) {
 //     $article = Article::find($id);
@@ -151,4 +151,4 @@ Route::get('articles', function (Request $request) {
 Route::get('articles/{article}', function(Article $article) {
     
     return view('articles.show', ['article' => $article]);
-});
+})->name('articles.show');

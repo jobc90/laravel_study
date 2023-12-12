@@ -34,7 +34,10 @@
             <div class="max-w-7xl mx-auto p-6 lg:p-8">
                 간단한 소셜 미디어 웹사이트
                 <div>
-                    <a href='/articles/create'>글쓰기</a>
+                    <a href='{{ route('articles.create') }}'>글쓰기</a>
+                </div>
+                <div>
+                    <a href='{{ route('articles.index') }}'>글목록</a>
                 </div>
             </div>
         </div>
