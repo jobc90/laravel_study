@@ -21,7 +21,7 @@
                             수정
                             </a>
                         </p>
-                        <form action="{{ route('articles.delete', ['article'=>$article->id])}}" method="POST">
+                        <form action="{{ route('articles.destroy', ['article'=>$article->id])}}" method="POST">
                             @csrf
                             @method('DELETE')
                             <button class="py-1 px-2 bg-red-400 text-white rounded text-xs">삭제</button>
