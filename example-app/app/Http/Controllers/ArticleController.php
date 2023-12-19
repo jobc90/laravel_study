@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateArticleRequest;
+use App\Http\Requests\DeleteArticleRequest;
+use App\Http\Requests\EditArticleRequest;
+use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,16 +22,18 @@ class ArticleController extends Controller
         return view('articles/create');
     }
 
-    public function store(Request $request)
+    public function store(CreateArticleRequest $request)
     {
         // 비어있지않고, 문자열이고, 255자를 넘으면 안된다.
-        $input = $request->validate([
-            'body' => [
-                'required',
-                'string',
-                'max:255'
-            ],
-        ]);
+        $input = $request->validated();
+        // 비어있지않고, 문자열이고, 255자를 넘으면 안된다.
+        // $input = $request->validate([
+        //     'body' => [
+        //         'required',
+        //         'string',
+        //         'max:255'
+        //     ],
+        // ]);
 
         // //글을 저장한다.
 
@@ -132,29 +138,23 @@ class ArticleController extends Controller
         return view('articles.show', ['article' => $article]);
     }
 
-    public function edit(Article $article)
+    public function edit(EditArticleRequest $request, Article $article)
     {
         // 컨트롤러 헬퍼를 사용
-        $this->authorize('edit', $article);
+        // $this->authorize('edit', $article);
         return view('articles.edit', ['article' => $article]);
     }
 
-    public function update(Article $article, Request $request)
+    public function update(Article $article, UpdateArticleRequest $request)
     {
         // if (!Auth::user()->can('update', $article)) {
         //     abort(403);
         // };
 
         // 컨트롤러 헬퍼를 사용
-        $this->authorize('update', $article);
+        // $this->authorize('update', $article);
 
-        $input = $request->validate([
-            'body' => [
-                'required',
-                'string',
-                'max:255'
-            ],
-        ]);
+        $input = $request->validated();
 
         $article->body = $input['body'];
         $article->save();
@@ -162,10 +162,10 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function destroy(Article $article)
+    public function destroy(DeleteArticleRequest $request, Article $article)
     {
         // 컨트롤러 헬퍼를 사용
-        $this->authorize('delete', $article);
+        // $this->authorize('delete', $article);
 
         $article->delete();
 
