@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArticleController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Article;
 use Illuminate\Http\Client\Request as ClientRequest;
@@ -35,10 +36,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 // Route::controller(ArticleController::class)->group(function(){
-    
+
 //     Route::get('/articles/create', 'create')->name('articles.create');
 //     Route::post('/articles', 'store')->name('articles.store');
 //     Route::get('articles', 'index')->name('articles.index');
@@ -50,3 +51,4 @@ require __DIR__.'/auth.php';
 // });
 
 Route::resource('articles', ArticleController::class);
+Route::resource('comments', CommentController::class);

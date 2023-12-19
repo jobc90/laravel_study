@@ -135,6 +135,7 @@ class ArticleController extends Controller
     // 위를 라우트 모델 바인딩을 적용하면
     public function show(Article $article)
     {
+        $article->load('comments.user');
         return view('articles.show', ['article' => $article]);
     }
 
