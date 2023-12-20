@@ -2,7 +2,7 @@
     <p>{{ $article->body }}</p>
     {{-- <p>{{ $article->created_at->format('Y년 m월 d일 H시') }}</p> --}}
     <p>
-        <a href="{{ route('profile', ['user' => $article->user->id]) }}">
+        <a href="{{ route('profile', ['user' => $article->user->username]) }}">
             {{ $article->user->name }}
         </a>
     </p>
