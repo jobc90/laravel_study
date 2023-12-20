@@ -52,3 +52,4 @@ require __DIR__ . '/auth.php';
 
 Route::resource('articles', ArticleController::class);
 Route::resource('comments', CommentController::class);
+Route::get('profile/{user}', [ProfileController::class, 'show'])->name('profile');
