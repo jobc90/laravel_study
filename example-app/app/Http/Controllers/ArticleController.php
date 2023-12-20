@@ -7,7 +7,9 @@ use App\Http\Requests\DeleteArticleRequest;
 use App\Http\Requests\EditArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
+
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
@@ -89,15 +91,21 @@ class ArticleController extends Controller
     public function index(Request $request)
     {
         // $page = $request->input('page', 1);
-        $perPage = $request->input('per_page', 3);
+        // $perPage = $request->input('per_page', 3);
         // $skip = ($page -1) * $perPage;
 
         $articles = Article::with('user')
-            ->select('id', 'body', 'user_id', 'created_at')
+            ->withCount('comments')
+            ->withExists([
+                'comments as recent_comments_exists' => function ($query) {
+                    $query->where('created_at', '>', Carbon::now()->subDay());
+                }
+            ])
+            // ->select('id', 'body', 'user_id', 'created_at')
             // ->skip($skip)
             // ->take($perPage)
             ->latest()
-            ->paginate($perPage);
+            ->paginate();
         // ->orderby('created_at', 'desc')
         // ->oldest()
         // ->orderby('body', 'asc')
@@ -136,6 +144,7 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         $article->load('comments.user');
+        $article->loadCount('comments');
         return view('articles.show', ['article' => $article]);
     }
 
