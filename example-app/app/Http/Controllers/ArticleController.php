@@ -88,7 +88,7 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function index(Request $request)
+    public function index()
     {
         // $page = $request->input('page', 1);
         // $perPage = $request->input('per_page', 3);

@@ -3,7 +3,7 @@
     {{-- <p>{{ $article->created_at->format('Y년 m월 d일 H시') }}</p> --}}
     <p>
         <a href="{{ route('profile', ['user' => $article->user->username]) }}">
-            {{ $article->user->name }}
+            {{ $article->user->username }}
         </a>
     </p>
     <p class="text-sm text-gray-500">
