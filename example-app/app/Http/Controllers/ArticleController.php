@@ -7,7 +7,7 @@ use App\Http\Requests\DeleteArticleRequest;
 use App\Http\Requests\EditArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
 use App\Models\Article;
-
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -88,8 +88,10 @@ class ArticleController extends Controller
         return redirect()->route('articles.index');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $q = $request->input('q');
+
         // $page = $request->input('page', 1);
         // $perPage = $request->input('per_page', 3);
         // $skip = ($page -1) * $perPage;
@@ -101,6 +103,12 @@ class ArticleController extends Controller
                     $query->where('created_at', '>', Carbon::now()->subDay());
                 }
             ])
+            ->when($q, function ($query, $q) {
+                $query->where('body', 'like', "%$q%")
+                    ->orWhereHas('user', function (Builder $query) use ($q) {
+                        $query->where('username', 'like', "%$q%");
+                    });
+            })
             // ->select('id', 'body', 'user_id', 'created_at')
             // ->skip($skip)
             // ->take($perPage)
@@ -126,6 +134,7 @@ class ArticleController extends Controller
             'articles.index',
             [
                 'articles' => $articles,
+                'q' => $q,
                 // 'results' => $results
                 // 'totalCount' => $totalCount,
                 // 'page' => $page,
